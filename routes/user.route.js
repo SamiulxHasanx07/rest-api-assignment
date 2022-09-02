@@ -15,5 +15,9 @@ router
     .route('/save')
     .post(userController.saveUser)
 
+router
+    .route('/delete/:id')
+    .delete(userController.deleteUserById)
+
 
 module.exports = router;
