@@ -6,7 +6,6 @@
   "scripts": {
     "start": "node index.js",
     "start-dev": "nodemon index.js",
-    "server": "json-server --watch db.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -16,7 +15,6 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.2",
     "ejs": "^3.1.8",
-    "express": "^4.18.1",
-    "json-server": "^0.17.0"
+    "express": "^4.18.1"
   }
 }
