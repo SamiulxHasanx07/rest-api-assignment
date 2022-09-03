@@ -62,43 +62,32 @@ module.exports.updateById = (req, res, next) => {
 //update bulk-users
 module.exports.bulkUpdate = (req, res, next) => {
     const reqUsers = req.body;
-    // console.log(reqUsers.length)
-    // console.log();
     const resUsers = fs.readFileSync('user.json');
     const users = JSON.parse(resUsers);
 
     if (typeof (reqUsers.length) != "undefined" && reqUsers.length > 0) {
-        console.log('valid data');
-        console.log(users)
         const invalidIds = [];
         const validIds = [];
+
         for (const data of req.body) {
-            // updateOps[ops.propName] = ops.value;
-            // console.log(ops);
-            // console.log(data)
             const validUser = users.find(user => user.id == data.id);
             if (typeof (validUser) != 'undefined') {
                 validIds.push(data.id);
-                const user = users.find(user => user.id == validUser.id);
                 const { name, gender, contact, address, photoUrl } = data;
                 if (name) validUser.name = name;
                 if (gender) validUser.gender = gender;
                 if (contact) validUser.gender = contact;
                 if (address) validUser.contact = address;
                 if (photoUrl) validUser.address = photoUrl;
-
-
-
             } else {
                 invalidIds.push(data.id);
             }
-            fs.writeFileSync('user.json', JSON.stringify(users))
-            // console.log(availableData);
+
+            fs.writeFileSync('user.json', JSON.stringify(users));
         }
-        // console.log(users);
-        res.send(`Data match by these ids ${validIds} & successfully updated data No data match by this ${invalidIds} id!! Please enter an valid id`);
+        res.send(`Total ${validIds.length > 0 ? validIds.length : 0} id, Id numbers { ${validIds.length > 0 ? validIds : 0} } successfully updated!! & Total ${invalidIds.length > 0 ? invalidIds.length : 0} id, Id numbers { ${invalidIds.length > 0 ? invalidIds : 0} } is not match.`);
     } else {
-        console.log('please enter valid data!')
+        res.send('Please enter valid JSON data!')
     }
 }
 
