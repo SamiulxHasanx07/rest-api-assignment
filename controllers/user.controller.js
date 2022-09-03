@@ -1,5 +1,6 @@
 const fs = require('fs');
 
+// global userlist
 const allUsers = fs.readFileSync('user.json');
 const usersList = JSON.parse(allUsers);
 

@@ -5,11 +5,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rest API</title>
+
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      ul{
+        list-style-type: none;
+        font-size: 20px;
+      }
+    </style>
   </head>
   <body>
     <h2>Welcome to User Rest API</h2>
     <p>
       You cann add, View Details, delete, update any use using this rest api.
+    
+      <h2>All Routes</h2>
+      <ul>
+        <li>/user/all or /user/all?limit=2</li>
+        <li>/user/:id</li>
+        <li>/user/save</li>
+        <li>/user/update</li>
+        <li>/user/bulk-update</li>
+        <li>/user/delete</li>
+      </ul>
     </p>
   </body>
 </html>
