@@ -23,7 +23,7 @@ router
     .patch(userController.bulkUpdate)
 
 router
-    .route('/delete/:id')
+    .route('/delete')
     .delete(userController.deleteUserById)
 
 
