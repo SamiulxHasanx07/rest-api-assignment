@@ -1,3 +1,4 @@
+const e = require('express');
 const fs = require('fs');
 
 // global userlist
@@ -36,10 +37,11 @@ module.exports.getUserById = (req, res, next) => {
 // save a user
 module.exports.saveUser = (req, res, next) => {
     let userArr = [];
-    const { id } = req.body;
+    const { id, name, contact, address, photoUrl, gender } = req.body;
     const reqData = req.body;
 
     if (usersList.length > 0) {
+
         const idExists = usersList.find(user => user.id == id);
         if (idExists) {
             res.status(409).send({
@@ -47,11 +49,18 @@ module.exports.saveUser = (req, res, next) => {
                 message: 'Sorry!! Id is already exists! Please enter an Unique id and try again'
             });
         }
-
-        if (!idExists) {
-            userArr.push(...usersList, reqData);
-            fs.writeFileSync('user.json', JSON.stringify(userArr));
-            res.send(`Successfully new user ${reqData.name} Added`);
+        if (id && name && contact && address && photoUrl && gender) {
+            if (!idExists) {
+                userArr.push(...usersList, reqData);
+                fs.writeFileSync('user.json', JSON.stringify(userArr));
+                res.send(`Successfully new user ${reqData.name} Added`);
+            }
+        } else {
+            res.status(422).send({
+                success: false,
+                message: 'Please check all property!! property missing/error!',
+                note: "have to provide data following these property with json data {id, name, gender, contact, address, photoUrl}"
+            });
         }
     } else {
         userArr.push(reqData);
