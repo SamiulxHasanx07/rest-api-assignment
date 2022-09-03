@@ -1,6 +1,5 @@
 const users = require('../user.json');
 const fs = require('fs');
-const e = require('express');
 
 // Get all users
 module.exports.getAllUsers = (req, res, next) => {
@@ -40,6 +39,27 @@ module.exports.saveUser = (req, res, next) => {
     }
 }
 
+// update user by id
+module.exports.updateById = (req, res, next) => {
+    const { id } = req.params;
+    const { name, gender, contact, address, photoUrl } = req.body;
+    const dataRes = fs.readFileSync('user.json');
+    const usersData = JSON.parse(dataRes);
+    const user = usersData.find(user => user.id == id);
+    if (user) {
+        if (name) user.name = name;
+        if (gender) user.gender = gender;
+        if (contact) user.contact = contact;
+        if (address) user.address = address;
+        if (photoUrl) user.photoUrl = photoUrl;
+        fs.writeFileSync('user.json', JSON.stringify(usersData));
+        res.send(`Successfully updated user ${user.id}`);
+    } else {
+        res.send('No data match!! Please enter an valid id');
+    }
+}
+
+// Delete user by id 
 module.exports.deleteUserById = (req, res, next) => {
     const { id } = req.params;
     const dataRes = fs.readFileSync('user.json');
@@ -54,7 +74,6 @@ module.exports.deleteUserById = (req, res, next) => {
         } else {
             res.send('Id is not valid!! Enter an valid id.')
         }
-
     } else {
         console.log("File is empty, You have to add data before execute the delete operation.");
     }

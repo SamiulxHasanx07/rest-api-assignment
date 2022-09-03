@@ -16,6 +16,10 @@ router
     .post(userController.saveUser)
 
 router
+    .route('/update/:id')
+    .patch(userController.updateById)
+
+router
     .route('/delete/:id')
     .delete(userController.deleteUserById)
 
