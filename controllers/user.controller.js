@@ -59,6 +59,49 @@ module.exports.updateById = (req, res, next) => {
     }
 }
 
+//update bulk-users
+module.exports.bulkUpdate = (req, res, next) => {
+    const reqUsers = req.body;
+    // console.log(reqUsers.length)
+    // console.log();
+    const resUsers = fs.readFileSync('user.json');
+    const users = JSON.parse(resUsers);
+
+    if (typeof (reqUsers.length) != "undefined" && reqUsers.length > 0) {
+        console.log('valid data');
+        console.log(users)
+        const invalidIds = [];
+        const validIds = [];
+        for (const data of req.body) {
+            // updateOps[ops.propName] = ops.value;
+            // console.log(ops);
+            // console.log(data)
+            const validUser = users.find(user => user.id == data.id);
+            if (typeof (validUser) != 'undefined') {
+                validIds.push(data.id);
+                const user = users.find(user => user.id == validUser.id);
+                const { name, gender, contact, address, photoUrl } = data;
+                if (name) validUser.name = name;
+                if (gender) validUser.gender = gender;
+                if (contact) validUser.gender = contact;
+                if (address) validUser.contact = address;
+                if (photoUrl) validUser.address = photoUrl;
+
+
+
+            } else {
+                invalidIds.push(data.id);
+            }
+            fs.writeFileSync('user.json', JSON.stringify(users))
+            // console.log(availableData);
+        }
+        // console.log(users);
+        res.send(`Data match by these ids ${validIds} & successfully updated data No data match by this ${invalidIds} id!! Please enter an valid id`);
+    } else {
+        console.log('please enter valid data!')
+    }
+}
+
 // Delete user by id 
 module.exports.deleteUserById = (req, res, next) => {
     const { id } = req.params;

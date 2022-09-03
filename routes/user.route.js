@@ -10,7 +10,6 @@ router
     .route('/:id')
     .get(userController.getUserById)
 
-
 router
     .route('/save')
     .post(userController.saveUser)
@@ -18,6 +17,10 @@ router
 router
     .route('/update/:id')
     .patch(userController.updateById)
+
+router
+    .route('/bulk-update')
+    .patch(userController.bulkUpdate)
 
 router
     .route('/delete/:id')
